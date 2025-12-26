@@ -1,0 +1,10 @@
+services:
+  nextjs:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/crypto-market-dashboard
+    command: npm run dev

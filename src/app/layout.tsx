@@ -14,7 +14,7 @@ export default function RootLayout({
 }>): JSX.Element {
 	return (
 		<html lang="pt-BR">
-			<body className="min-h-screen bg-primary h-screen w-screen">
+			<body className="bg-primary h-screen w-screen">
 				<main className="h-full w-full flex-1">{children}</main>
 			</body>
 		</html>
