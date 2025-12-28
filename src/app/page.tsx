@@ -1,6 +1,7 @@
 import type { JSX } from "react";
-import CoinsCard from "@/components/coinsCard";
 import CoinsChart from "@/components/coinsChart";
+import "../lib/websocket";
+import CoinCard from "@/components/coinCard";
 
 export default function Home(): JSX.Element {
 	const coins: {
@@ -27,7 +28,13 @@ export default function Home(): JSX.Element {
 				</h1>
 			</div>
 			<div className="w-5/6 h-full p-4 gap-4 flex flex-col">
-				<CoinsCard data={coins} />
+				<div className="grid grid-cols-5 gap-4 p-2">
+					<CoinCard coin="btcusdt" />
+					<CoinCard coin="bnbusdt" />
+					<CoinCard coin="ethusdt" />
+					<CoinCard coin="solusdt" />
+					<CoinCard coin="flowusdt" />
+				</div>
 				<CoinsChart data={coins} />
 			</div>
 		</div>
