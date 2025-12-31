@@ -1,57 +1,52 @@
 "use client";
 
-import type { HTMLAttributes, JSX } from "react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import type { JSX } from "react";
 import {
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "@/components/ui/chart";
+	Area,
+	AreaChart,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from "recharts";
+import { useTimeStamp } from "@/hooks/useTimeStamp";
+import type { ChartPoint } from "@/lib/types";
 
-type chartConfig = {
-	price: {
-		label: string;
-		color: string;
-	};
+type props = {
+	symbol: string;
+	maxSize?: number;
 };
 
-type ChartData = {
-	symbol: string;
-	value: number;
-	variation: number;
-}[];
-
-type PriceChartProps = {
-	data: ChartData;
-	config: chartConfig;
-} & HTMLAttributes<HTMLDivElement>;
-
-export function PriceChart({
-	data,
-	config,
-	className,
-}: PriceChartProps): JSX.Element {
+export function PriceChart({ symbol, maxSize = 60 }: props): JSX.Element {
+	const data: ChartPoint[] = useTimeStamp(symbol, maxSize);
 	return (
-		<ChartContainer config={config} className={className}>
-			<LineChart data={data}>
-				<CartesianGrid vertical={false} />
-				<XAxis dataKey="symbol" />
-				<ChartTooltip content={<ChartTooltipContent />} />
-				<Line
-					dataKey="value"
+		<ResponsiveContainer width="100%" height={350}>
+			<AreaChart data={data}>
+				<XAxis dataKey="time" />
+				<YAxis />
+				<Tooltip />
+				<Area
 					type="monotone"
-					stroke="green"
-					strokeWidth={2}
-					dot={true}
+					dataKey="price"
+					stackId="1"
+					stroke="#bbbb44"
+					fill="#eeee1150"
 				/>
-				<Line
-					dataKey="variation"
+				<Area
 					type="monotone"
-					stroke="pink"
-					strokeWidth={4}
-					dot={true}
+					dataKey="volume"
+					stackId="1"
+					stroke="#44bbbb"
+					fill="#11eeee50"
 				/>
-			</LineChart>
-		</ChartContainer>
+				<Area
+					type="monotone"
+					dataKey="change"
+					stackId="1"
+					stroke="#bb44bb"
+					fill="#ee11ee50"
+				/>
+			</AreaChart>
+		</ResponsiveContainer>
 	);
 }

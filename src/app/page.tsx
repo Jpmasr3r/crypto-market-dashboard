@@ -1,41 +1,31 @@
 import type { JSX } from "react";
-import CoinsChart from "@/components/coinsChart";
-import "../lib/websocket";
 import CoinCard from "@/components/coinCard";
+import CoinsChart from "@/components/coinsChart";
+import "@/lib/websocket";
+
+const gridMap: Record<number, string> = {
+	1: "grid-cols-1",
+	2: "grid-cols-2",
+	3: "grid-cols-3",
+	4: "grid-cols-4",
+	5: "grid-cols-5",
+};
 
 export default function Home(): JSX.Element {
-	const coins: {
-		symbol: string;
-		value: number;
-		variation: number;
-	}[] = [
-		{ symbol: "ETH", value: 25, variation: 3 },
-		{ symbol: "LTC", value: 150, variation: -2 },
-		{ symbol: "BTC	", value: 100, variation: -5 },
-		{ symbol: "XRP", value: 0.5, variation: 1 },
-		{ symbol: "ADA", value: 1.2, variation: 4 },
-	]; // Placeholder data
+	const coins = ["btcusdt", "ethusdt", "bnbusdt", "bnbbrl"];
+	const size = gridMap[coins.length] ?? "grid-cols-4";
 
 	return (
 		<div className="flex flex-row h-full w-full">
-			<div className="w-1/6 h-full bg-secondary rounded-br-2xl p-2 gap-4 text-white">
-				<h1>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Earum sapiente placeat perspiciatis optio atque temporibus
-					neque, tempora dolorum omnis, quia, asperiores voluptate
-					quas officia assumenda quasi. Impedit id blanditiis
-					recusandae.
-				</h1>
-			</div>
-			<div className="w-5/6 h-full p-4 gap-4 flex flex-col">
-				<div className="grid grid-cols-5 gap-4 p-2">
-					<CoinCard coin="btcusdt" />
-					<CoinCard coin="bnbusdt" />
-					<CoinCard coin="ethusdt" />
-					<CoinCard coin="solusdt" />
-					<CoinCard coin="flowusdt" />
+			<div className="w-full p-4 gap-4 flex flex-col">
+				<div className={`grid grid-cols-1 ${size} gap-4 p-2`}>
+					{coins.map((coin) => (
+						<CoinCard key={coin} coin={coin} />
+					))}
 				</div>
-				<CoinsChart data={coins} />
+				{coins.map((coin) => (
+					<CoinsChart key={coin} symbol={coin} />
+				))}
 			</div>
 		</div>
 	);

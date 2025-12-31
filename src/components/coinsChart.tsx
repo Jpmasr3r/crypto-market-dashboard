@@ -1,22 +1,15 @@
 import type { JSX } from "react";
+import type { TickerSymbol } from "@/lib/types";
 import { PriceChart } from "./priceChart";
 
 type props = {
-	data: {
-		symbol: string;
-		value: number;
-		variation: number;
-	}[];
+	symbol: TickerSymbol;
 };
 
-export default function CoinsChart({ data }: props): JSX.Element {
+export default function CoinsChart({ symbol }: props): JSX.Element {
 	return (
-		<div className=" ">
-			<PriceChart
-				className="h-1/2 w-full p-2 gap-4 rounded-lg bg-secondary"
-				config={{ price: { label: "value", color: "red" } }}
-				data={data}
-			/>
+		<div className="flex flex-col h-2/3 w-full gap-4 p-4 text-white bg-secondary rounded-lg">
+			<PriceChart symbol={symbol} maxSize={100} />
 		</div>
 	);
 }
