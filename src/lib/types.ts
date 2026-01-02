@@ -31,6 +31,7 @@ export interface ChartPoint {
 	price: number;
 	volume: number;
 	change: number;
+	symbol: TickerSymbol;
 }
 
 export type TickerListener24h = (data: Binance24hrTicker) => void;

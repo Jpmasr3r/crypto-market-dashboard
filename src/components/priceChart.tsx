@@ -11,16 +11,34 @@ import {
 } from "recharts";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 import type { ChartPoint } from "@/lib/types";
+import AnimatedText from "./animatedText";
 
 type props = {
 	symbol: string;
 	maxSize?: number;
 };
 
-export function PriceChart({ symbol, maxSize = 60 }: props): JSX.Element {
+export function PriceChart({ symbol, maxSize = 10 }: props): JSX.Element {
 	const data: ChartPoint[] = useTimeStamp(symbol, maxSize);
+
+	if (data.length === 0) {
+		return (
+			<div className="w-full h-full flex justify-center items-center">
+				<AnimatedText
+					frames={[
+						"Connecting",
+						"Connecting.",
+						"Connecting..",
+						"Connecting...",
+					]}
+					speed={250}
+					className="text-4xl"
+				/>
+			</div>
+		);
+	}
 	return (
-		<ResponsiveContainer width="100%" height={350}>
+		<ResponsiveContainer width="100%" height="100%">
 			<AreaChart data={data}>
 				<XAxis dataKey="time" />
 				<YAxis />
@@ -29,22 +47,17 @@ export function PriceChart({ symbol, maxSize = 60 }: props): JSX.Element {
 					type="monotone"
 					dataKey="price"
 					stackId="1"
-					stroke="#bbbb44"
-					fill="#eeee1150"
+					stroke="#44BB44"
+					strokeWidth={3}
+					fill="#44BB4444"
 				/>
 				<Area
 					type="monotone"
-					dataKey="volume"
+					dataKey="symbol"
 					stackId="1"
-					stroke="#44bbbb"
-					fill="#11eeee50"
-				/>
-				<Area
-					type="monotone"
-					dataKey="change"
-					stackId="1"
-					stroke="#bb44bb"
-					fill="#ee11ee50"
+					stroke="#44BB44"
+					strokeWidth={3}
+					fill="#44BB4444"
 				/>
 			</AreaChart>
 		</ResponsiveContainer>

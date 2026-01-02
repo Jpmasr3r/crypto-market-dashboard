@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import type { JSX } from "react";
 import { use24hrTicker } from "@/hooks/use24hrTicker";
 import type { Binance24hrTicker } from "@/lib/types";
+import AnimatedText from "./animatedText";
 import { Card, CardContent } from "./ui/card";
 
 type prop = {
@@ -27,7 +28,8 @@ export default function CoinCard({ coin }: prop): JSX.Element {
 					<h1 className="text-3xl italic">{data.s}</h1>
 					<p>$ {Number(data.c).toFixed(6)}</p>
 					<p
-						className={`${background} ${textColor} text-nowrap flex flex-row font-extrabold items-center gap-2 w-fit px-3 py-1.5 rounded-full`}
+						className={`${background} ${textColor} text-nowrap flex flex-row 
+						font-extrabold items-center p-2 gap-4 m-2 w-fit px-3 py-1.5 rounded-full`}
 					>
 						{isPositive ? <ArrowUpRight /> : <ArrowDownRight />}
 						<span>{Number(data.P).toFixed(2)}% 24h</span>
@@ -37,11 +39,20 @@ export default function CoinCard({ coin }: prop): JSX.Element {
 		);
 	} else {
 		return (
-			<div>
-				<Card className="bg-secondary border-0 text-white font-bold p-4">
-					Connecting...
-				</Card>
-			</div>
+			<Card
+				className="bg-secondary border-0 text-white font-bold p-2 gap-4 m-2 flex 
+				justify-center items-center"
+			>
+				<AnimatedText
+					frames={[
+						"Connecting",
+						"Connecting.",
+						"Connecting..",
+						"Connecting...",
+					]}
+					speed={250}
+				/>
+			</Card>
 		);
 	}
 }

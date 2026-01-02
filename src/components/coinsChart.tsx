@@ -1,15 +1,18 @@
-import type { JSX } from "react";
+"use client";
+
+import { type JSX, useState } from "react";
 import type { TickerSymbol } from "@/lib/types";
+import { cryptoPairs } from "@/lib/utils";
 import { PriceChart } from "./priceChart";
+import SelectCoin from "./selectCoin";
 
-type props = {
-	symbol: TickerSymbol;
-};
+export default function CoinsChart(): JSX.Element {
+	const [symbol, setSymbol] = useState<TickerSymbol>(cryptoPairs[0]);
 
-export default function CoinsChart({ symbol }: props): JSX.Element {
 	return (
-		<div className="flex flex-col h-2/3 w-full gap-4 p-4 text-white bg-secondary rounded-lg">
-			<PriceChart symbol={symbol} maxSize={100} />
+		<div className="flex flex-col h-2/3 w-full p-4 gap-4 m-2 text-white bg-secondary rounded-lg">
+			<SelectCoin setSymbol={setSymbol} symbol={symbol} />
+			<PriceChart symbol={symbol} />
 		</div>
 	);
 }
