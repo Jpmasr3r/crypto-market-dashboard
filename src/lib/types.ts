@@ -1,5 +1,3 @@
-export type TickerSymbol = string;
-
 export interface Binance24hrTicker {
 	e: string;
 	E: number;
@@ -28,9 +26,13 @@ export interface Binance24hrTicker {
 
 export interface ChartPoint {
 	time: string;
-	price: number;
-	symbol: TickerSymbol;
+	// price: CoinPrice;
+	// symbol: TickerSymbol;
+	[key: string]: number | string;
 }
+
+export type CoinPrice = number;
+export type TickerSymbol = string;
 
 export type TickerListener24h = (data: Binance24hrTicker) => void;
 export type TickerListener24hChart = (data: ChartPoint[]) => void;

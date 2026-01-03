@@ -40,8 +40,8 @@ export default function CoinCard({ coin }: prop): JSX.Element {
 	} else {
 		return (
 			<Card
-				className="bg-secondary border-0 text-white font-bold p-2 gap-4 m-2 flex 
-				justify-center items-center"
+				className="bg-secondary border-0 text-white font-bold p-2 gap-4 m-2
+				flex justify-center items-center"
 			>
 				<AnimatedText
 					frames={[
