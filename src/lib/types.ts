@@ -29,8 +29,6 @@ export interface Binance24hrTicker {
 export interface ChartPoint {
 	time: string;
 	price: number;
-	volume: number;
-	change: number;
 	symbol: TickerSymbol;
 }
 

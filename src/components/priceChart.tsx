@@ -1,9 +1,8 @@
-"use client";
-
 import type { JSX } from "react";
 import {
-	Area,
-	AreaChart,
+	CartesianGrid,
+	Line,
+	LineChart,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -37,29 +36,22 @@ export function PriceChart({ symbol, maxSize = 10 }: props): JSX.Element {
 			</div>
 		);
 	}
+
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<AreaChart data={data}>
+			<LineChart data={data}>
+				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="time" />
 				<YAxis />
 				<Tooltip />
-				<Area
+				<Line
 					type="monotone"
 					dataKey="price"
-					stackId="1"
 					stroke="#44BB44"
 					strokeWidth={3}
-					fill="#44BB4444"
+					dot={true}
 				/>
-				<Area
-					type="monotone"
-					dataKey="symbol"
-					stackId="1"
-					stroke="#44BB44"
-					strokeWidth={3}
-					fill="#44BB4444"
-				/>
-			</AreaChart>
+			</LineChart>
 		</ResponsiveContainer>
 	);
 }

@@ -6,7 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import type { Binance24hrTicker, ChartPoint } from "@/lib/types";
+import type { Binance24hrTicker, ChartPoint, TickerListener24h } from "@/lib/types";
 import { generateId } from "@/lib/utils";
 import { removeListener, socketSubscribe24h } from "@/lib/websocket";
 
@@ -46,8 +46,6 @@ function getTimeStamp(
 	const chartPoint: ChartPoint = {
 		time: new Date().toLocaleTimeString(),
 		price: Number(ticker.c),
-		change: Number(ticker.v),
-		volume: Number(ticker.p),
 		symbol: ticker.s,
 	};
 
@@ -59,8 +57,10 @@ function getTimeStamp(
 function createTickerListener(
 	setData: Dispatch<SetStateAction<ChartPoint[]>>,
 	maxSizeRef: RefObject<number>
-): (ticker: Binance24hrTicker) => void {
+): TickerListener24h {
 	return (ticker: Binance24hrTicker) => {
-		setData((prev) => getTimeStamp(prev, ticker, maxSizeRef.current));
+		setData((prev: ChartPoint[]) =>
+			getTimeStamp(prev, ticker, maxSizeRef.current)
+		);
 	};
 }
